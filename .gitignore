@@ -1,0 +1,29 @@
+# Python bytecode, tooling, and local virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Hydra/experiment outputs and model artifacts
+outputs/
+multirun/
+results/
+runs/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+
+# Generated PDNAR/GNARL datasets and local run metadata
+dataset/
+wandb/
+
+# Editors and operating systems
+.DS_Store
+.vscode/
+.idea/
