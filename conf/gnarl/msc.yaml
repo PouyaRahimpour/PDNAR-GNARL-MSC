@@ -1,0 +1,13 @@
+# Kept aligned with PDNAR's published MSC synthetic setting.
+data:
+  dataset_dir: dataset/set_cover
+  train_samples: 1000
+  val_samples: 100
+  test_samples: 100
+  train_nodes: 16
+  test_nodes: [16, 32, 64]
+model:
+  hidden_dim: 64
+  message_passing_rounds: 2
+device: cpu
+seed: 0

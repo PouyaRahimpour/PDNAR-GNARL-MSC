@@ -1,0 +1,10 @@
+defaults:
+  - msc
+total_steps: 100000
+rollout_steps: 1024
+update_epochs: 10
+learning_rate: 0.0005
+clip_ratio: 0.2
+value_coefficient: 0.5
+entropy_coefficient: 0.01
+gamma: 1.0

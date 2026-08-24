@@ -1,0 +1,5 @@
+defaults:
+  - msc
+epochs: 10
+learning_rate: 0.001
+episodes_per_graph: 1
