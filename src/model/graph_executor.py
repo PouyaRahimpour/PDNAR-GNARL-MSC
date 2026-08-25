@@ -315,10 +315,11 @@ class GraphNeuralExecutor(nn.Module):
         optimal_set_acc = self.accuracy(pred_set.squeeze(-1), batch.primal_optimal_solution)
 
         results = {
-            "final_set_acc": final_set_acc, 
+            "final_set_acc": final_set_acc,
             "final_weight_ratio": final_weight_ratio,
             "optimal_weight_ratio": optimal_weight_ratio,
-            "optimal_set_acc": optimal_set_acc
+            "optimal_set_acc": optimal_set_acc,
+            "pred_set": pred_set.detach().clone(),
         }
 
         return results 

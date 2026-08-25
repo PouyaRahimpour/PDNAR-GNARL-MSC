@@ -1,5 +1,3 @@
-"""Behavioural cloning for the ILP expert policy."""
-
 from __future__ import annotations
 
 import random
@@ -21,29 +19,78 @@ class BCConfig:
     device: str = "cpu"
 
 
-def train_bc(model, data: Iterable, config: BCConfig = BCConfig()):
-    """Train on state/action distributions from random orderings of each ILP cover."""
+def train_bc(
+    model,
+    data: Iterable,
+    config: BCConfig = BCConfig(),
+):
     device = torch.device(config.device)
+
     model.to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=config.learning_rate,
+    )
+
     history = []
+
     records = list(data)
+
     for _ in range(config.epochs):
         random.shuffle(records)
+
         losses = []
+
         model.train()
+
         for record in records:
+
             for _ in range(config.episodes_per_graph):
-                env = MSCEnvironment(record, device)
-                expert = ILPExpert(record, device)
+
+                env = MSCEnvironment(
+                    record,
+                    device,
+                )
+
+                expert = ILPExpert(
+                    record,
+                    device,
+                )
+
                 while not env.is_terminal():
+
                     logits, _ = model(env)
+
+                    distribution = masked_categorical(
+                        logits,
+                        env.action_mask(),
+                    )
+
                     target = expert.distribution(env)
-                    loss = -(target * masked_categorical(logits, env.action_mask()).logits).sum()
+
+                    # target is a probability distribution over actions.
+                    log_probs = distribution.logits
+
+                    loss = -(
+                        target.to(log_probs.device)
+                        * log_probs
+                    ).sum()
+
                     optimizer.zero_grad()
                     loss.backward()
                     optimizer.step()
-                    losses.append(float(loss.detach().cpu()))
-                    env.step(expert.sample_action(env))
-        history.append(sum(losses) / max(len(losses), 1))
+
+                    losses.append(
+                        float(loss.detach().cpu())
+                    )
+
+                    env.step(
+                        expert.sample_action(env)
+                    )
+
+        history.append(
+            sum(losses) / max(len(losses), 1)
+        )
+
     return history

@@ -8,7 +8,7 @@ from torch_geometric.utils import scatter
 
 
 class BipartiteMPNN(nn.Module):
-    def __init__(self, hidden_dim: int, rounds: int = 2):
+    def __init__(self, hidden_dim: int, rounds: int = 4):
         super().__init__()
         self.rounds = rounds
         self.set_to_element = nn.ModuleList([nn.Sequential(nn.Linear(hidden_dim, hidden_dim), nn.ReLU()) for _ in range(rounds)])
