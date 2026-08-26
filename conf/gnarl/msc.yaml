@@ -6,7 +6,7 @@ data:
   test_samples: 100
 
   train_nodes: 16
-  test_nodes: [16, 32, 64, 128, 259, 512, 1024]
+  test_nodes: [16, 32, 64, 128, 256, 512, 1024]
 
 model:
   hidden_dim: 64
