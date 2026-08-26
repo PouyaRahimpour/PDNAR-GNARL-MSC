@@ -91,7 +91,7 @@ def evaluate_gnarl(
 
         objectives.append(objective)
         optimal_ratios.append(objective / optimal)
-        classical_ratios.append(objective / classical)
+        classical_ratios.append(objective / optimal)
         steps.append(env.state.step)
 
     n = len(objectives)
