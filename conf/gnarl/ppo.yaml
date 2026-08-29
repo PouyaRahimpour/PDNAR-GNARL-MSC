@@ -8,7 +8,7 @@ update_epochs: 5 # 10
 
 learning_rate: 0.00001
 
-batch_size: 64
+batch_size: 16
 
 clip_ratio: 0.2
 value_coefficient: 0.5
